@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أكاديمية الوسيط الذكي 2026</title>
-    <!-- Tailwind CSS للتمسيق البصري -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons للأيقونات -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
         
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #F8F9FA;
+            background-color: #FBFBFB;
         }
 
         .gold-text { color: #C5A059; }
@@ -23,130 +21,111 @@
         .step-card.active {
             background-color: white;
             border-color: #C5A059;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 25px -5px rgba(197, 160, 89, 0.1);
         }
 
-        .step-card.active .icon-box {
-            background-color: #1A1A1A;
-            color: #C5A059;
+        .video-container iframe, .video-container video {
+            width: 100%;
+            height: 100%;
+            border-radius: 1.5rem;
         }
 
         #audio-progress-bar {
-            transition: width 0.3s linear;
+            transition: width 0.2s linear;
         }
 
-        .toast {
-            transition: opacity 0.3s ease-in-out;
+        .toast-active {
+            opacity: 1 !important;
+            transform: translate(-50%, -20px) !important;
         }
     </style>
 </head>
 <body class="text-[#1A1A1A] selection:bg-[#C5A059] selection:text-white">
 
-    <!-- ملف الصوت الخفي -->
     <audio id="global-audio"></audio>
 
-    <!-- الهيدر -->
-    <header class="bg-white/80 backdrop-blur-md border-b border-gray-100 py-4 px-6 sticky top-0 z-50 shadow-sm">
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-xl border-b border-gray-100 py-5 px-6 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 dark-bg rounded-xl flex items-center justify-center gold-text shadow-lg">
-                    <i data-lucide="shield-check" size="24"></i>
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 dark-bg rounded-2xl flex items-center justify-center gold-text shadow-xl">
+                    <i data-lucide="shield-check" size="28"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight">أكاديمية <span class="gold-text">الوسيط الذكي</span> 2026</h1>
-                    <p class="text-[10px] text-gray-400 font-medium uppercase tracking-widest">The Smart Broker Methodology</p>
+                    <h1 class="text-2xl font-black tracking-tight">أكاديمية <span class="gold-text">الوسيط الذكي</span></h1>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em]">Smart Broker Dubai 2026</p>
                 </div>
             </div>
-            <div class="hidden sm:flex items-center gap-3 bg-[#E8F5E9] text-[#2E7D32] px-4 py-1.5 rounded-full text-xs font-bold border border-[#C8E6C9]">
-                <div class="w-1.5 h-1.5 bg-[#2E7D32] rounded-full animate-pulse"></div>
-                نظام سيادي نشط
+            <div class="hidden md:flex items-center gap-3 bg-emerald-50 text-emerald-700 px-5 py-2 rounded-full text-xs font-black border border-emerald-100">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                نظام الأتمتة نشط
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto p-4 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <main class="max-w-7xl mx-auto p-4 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
         
-        <!-- القائمة الجانبية - الوحدات -->
-        <div class="lg:col-span-4 space-y-4">
+        <!-- Sidebar -->
+        <div class="lg:col-span-4 order-2 lg:order-1">
             <div class="flex items-center justify-between mb-6 px-2">
-                <h2 class="text-lg font-black text-gray-800">خارطة الطريق</h2>
-                <span id="units-count" class="text-[10px] bg-gray-200 px-2 py-0.5 rounded text-gray-500 font-bold">4 وحدات تدريبية</span>
+                <h2 class="text-xl font-black text-gray-800">خارطة الطريق</h2>
+                <span id="units-count-label" class="bg-gray-100 text-gray-500 text-[10px] px-3 py-1 rounded-full font-bold">جارِ التحميل...</span>
             </div>
 
-            <div id="steps-container" class="space-y-3">
-                <!-- سيتم توليد الوحدات هنا بواسطة جافاسكريبت -->
-            </div>
+            <div id="steps-container" class="space-y-4"></div>
 
-            <!-- مربع الدعم -->
-            <div class="p-6 bg-gradient-to-br from-[#1A1A1A] to-[#333] rounded-3xl mt-8 shadow-2xl relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 gold-bg opacity-5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110"></div>
-                <h4 class="text-sm font-bold gold-text mb-2 flex items-center gap-2">
-                    <i data-lucide="message-circle" size="16"></i> دعم الوسيط الذكي
+            <!-- Support Box -->
+            <div class="p-8 bg-gradient-to-br from-[#1A1A1A] to-[#2D2D2D] rounded-[2rem] mt-10 shadow-2xl relative overflow-hidden group">
+                <div class="absolute -top-10 -right-10 w-40 h-40 gold-bg opacity-10 rounded-full blur-3xl group-hover:opacity-20 transition-opacity"></div>
+                <h4 class="text-sm font-bold gold-text mb-3 flex items-center gap-2">
+                    <i data-lucide="help-circle" size="18"></i> الدعم الفني
                 </h4>
-                <p class="text-xs text-gray-300 leading-relaxed mb-4">هل لديك استفسار عن تطبيق الأدوات؟ مساعدك التقني جاهز للرد.</p>
-                <button class="w-full py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl text-xs font-bold text-white transition-colors">
-                    ابدأ محادثة فورية
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">هل لديك استفسار عن الأدوات؟ مساعدك التقني جاهز للرد.</p>
+                <button class="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-black text-white transition-all">
+                    بدء محادثة فورية
                 </button>
             </div>
         </div>
 
-        <!-- منطقة المحتوى الرئيسية -->
-        <div class="lg:col-span-8">
-            <div class="bg-white border border-gray-100 rounded-[2.5rem] shadow-sm min-h-[600px] flex flex-col relative overflow-hidden">
-                
-                <!-- مشغل الفيديو -->
-                <div class="relative w-full aspect-video bg-[#1A1A1A] group">
-                    <video id="main-video" controls class="w-full h-full object-cover" poster="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1200">
-                        <source id="video-source" src="" type="video/mp4">
-                    </video>
-                    <div class="absolute top-4 right-4 z-10">
-                        <div class="bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-[10px] font-bold border border-white/10 flex items-center gap-2">
-                            <i data-lucide="monitor-play" size="12" class="gold-text"></i>
-                            شرح تطبيقي مباشر
-                        </div>
-                    </div>
+        <!-- Content Area -->
+        <div class="lg:col-span-8 order-1 lg:order-2">
+            <div class="bg-white border border-gray-100 rounded-[3rem] shadow-xl overflow-hidden flex flex-col min-h-[700px]">
+                <!-- Hybrid Video Player -->
+                <div class="video-container relative aspect-video bg-black overflow-hidden shadow-inner">
+                    <div id="video-wrapper" class="w-full h-full"></div>
                 </div>
 
-                <!-- تفاصيل الوحدة -->
-                <div class="p-6 md:p-12 relative" id="unit-content">
-                    <!-- سيتم حقن المحتوى هنا -->
-                </div>
+                <!-- Unit Content -->
+                <div class="p-8 md:p-14" id="unit-content"></div>
             </div>
 
-            <!-- مربع التحميل السفلي -->
-            <div class="mt-8 flex flex-col sm:flex-row gap-6 items-center justify-between bg-white p-8 rounded-[2rem] border border-gray-100 shadow-xl overflow-hidden relative group transition-all hover:shadow-2xl">
-                <div class="absolute top-0 left-0 w-2 h-full gold-bg"></div>
-                <div class="text-right flex items-center gap-5">
-                    <div class="w-14 h-14 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center border border-red-100 shadow-sm transition-transform group-hover:rotate-6">
-                        <i data-lucide="book" size="28"></i>
+            <!-- PDF Box -->
+            <div class="mt-8 bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6 hover:shadow-2xl transition-all duration-500">
+                <div class="flex items-center gap-6">
+                    <div class="w-16 h-16 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center border border-red-100">
+                        <i data-lucide="file-text" size="32"></i>
                     </div>
                     <div>
-                        <p class="text-[10px] gold-text font-black uppercase tracking-wider mb-1">الحقيبة التعليمية</p>
-                        <p class="text-xl font-black text-gray-900 leading-none">الدليل التشغيلي المطبوع (PDF)</p>
-                        <p class="text-xs text-gray-400 mt-2 font-medium">يحتوي على كافة أوامر ChatGPT وبروتوكولات الرد.</p>
+                        <h4 class="text-xl font-black text-gray-900">الحقيبة التعليمية الكاملة</h4>
+                        <p class="text-xs text-gray-400 mt-1 font-medium">تحميل الدليل التشغيلي وبروتوكولات الرد (PDF).</p>
                     </div>
                 </div>
-                <button class="flex items-center gap-3 gold-bg px-10 py-4 rounded-2xl font-black text-sm text-[#1A1A1A] hover:bg-[#B38F4D] hover:shadow-lg hover:shadow-[#C5A059]/30 transition-all w-full sm:w-auto justify-center group">
-                    <i data-lucide="download" size="20" class="group-hover:translate-y-0.5 transition-transform"></i>
+                <button class="gold-bg px-8 py-4 rounded-2xl font-black text-sm text-[#1A1A1A] hover:bg-[#b59250] transition-all flex items-center gap-3 w-full md:w-auto justify-center">
+                    <i data-lucide="download"></i>
                     تحميل الكتاب المرجعي
                 </button>
             </div>
         </div>
     </main>
 
-    <footer class="max-w-7xl mx-auto py-12 px-6 border-t border-gray-100 text-center">
-        <p class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">
-            &copy; 2026 جميع الحقوق محفوظة لبرنامج الوسيط الذكي - دبي
-        </p>
-    </footer>
-
-    <!-- إشعار النسخ -->
-    <div id="toast" class="toast fixed bottom-10 left-1/2 -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-full shadow-2xl text-sm font-bold opacity-0 pointer-events-none z-[100]">
-        تم نسخ القالب بنجاح!
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-[#1A1A1A] text-white px-8 py-4 rounded-2xl shadow-2xl text-sm font-bold opacity-0 pointer-events-none transition-all duration-300 z-[100] border border-white/10">
+        تم النسخ بنجاح!
     </div>
 
     <script>
-        // بيانات المنهج
         const stepsData = [
             {
                 id: 1,
@@ -154,11 +133,12 @@
                 subtitle: "كسر حاجز الخوف الرقمي",
                 time: "10 دقائق",
                 icon: "lightbulb",
-                videoUrl: "https://youtu.be/yoUMWGKP8f8", 
+                videoType: "youtube",
+                videoUrl: "https://www.youtube.com/embed/yoUMWGKP8f8",
                 description: "في هذا الجزء، سنكسر حاجز الخوف من التكنولوجيا. ستعرف كيف توفر 10 ساعات من وقتك أسبوعياً وتجعل التكنولوجيا تعمل بدلاً منك.",
                 details: ["فهم قاعدة الـ 180 ثانية للرد السريع", "التحول من وسيط تقليدي إلى مستشار رقمي", "كيفية استرجاع 10 ساعات عمل أسبوعياً"],
-                showAudio: true,
-                audioSrc: "intro.mp3"
+                hasAudio: true,
+                audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
             },
             {
                 id: 2,
@@ -166,10 +146,11 @@
                 subtitle: "صناعة المحتوى الإبداعي",
                 time: "40 دقيقة",
                 icon: "pen-tool",
-                videoUrl: "https://www.w3schools.com/html/movie.mp4", 
+                videoType: "direct",
+                videoUrl: "https://www.w3schools.com/html/movie.mp4",
                 description: "سنتعلم هنا كيف تكتب 'أوامر سيادية' لبرنامج ChatGPT ليقوم بكتابة وصف فخم للعقار وقصص بيعية تجذب المستثمرين.",
                 details: ["كتابة وصف عقاري يركز على العائد الاستثماري", "صياغة رسائل واتساب 'الخطاف' (Hooks)", "تحويل البيانات الجافة إلى قصص بيعية مؤثرة"],
-                copyableHooks: [
+                copyable: [
                     { label: "للمستثمر", text: "سيد اسم العميل، الوقت هو أثمن عملة في دبي. قمت بتحليل الفرصة وأعددت لك هذا التقرير التفاعلي." },
                     { label: "للمشتري النهائي", text: "تحية طيبة، تخيل أن هذا هو منزلك القادم. لقد وضعت لك كافة التفاصيل في هذا العرض الرقمي." }
                 ]
@@ -180,8 +161,9 @@
                 subtitle: "التميز البصري الفائق",
                 time: "30 دقيقة",
                 icon: "layout",
-                videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", 
-                description: "سنتعلم استخدام أداة سهلة لتقوم بتصميم عرض عقاري تفاعلي باللون الذهبي والأسود، يظهر للعميل على موبايله كأنه تطبيق خاص.",
+                videoType: "direct",
+                videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
+                description: "سنتعلم استخدام أداة سهلة لتقوم بتصميم عرض عقاري تفاعلي باللون الذهبي والأسود، يظهر للعميل كأنه تطبيق خاص.",
                 details: ["تصميم عرض Gamma بلمسة واحدة", "إضافة الصور والخرائط التفاعلية", "تنسيق الألوان الملكية (أسود وذهبي)"]
             },
             {
@@ -189,37 +171,34 @@
                 title: "الوحدة 4: التحليلات والإغلاق",
                 subtitle: "مراقبة سلوك العميل",
                 time: "20 دقيقة",
-                icon: "bar-chart",
-                videoUrl: "https://www.w3schools.com/html/movie.mp4", 
+                icon: "bar-chart-3",
+                videoType: "direct",
+                videoUrl: "https://www.w3schools.com/html/movie.mp4",
                 description: "هنا سنعرف كيف نستخدم روابطنا الذكية لنعرف بالضبط متى فتح العميل الرابط، لنتصل به في اللحظة الذهبية.",
                 details: ["تتبع نقرات العميل وتفاعلهم", "بروتوكول التعامل مع الاعتراضات", "توقيت الاتصال الذهبي"]
             }
         ];
 
-        let activeStepIndex = 0;
-        const audioPlayer = document.getElementById('global-audio');
+        let activeIndex = 0;
+        const audio = document.getElementById('global-audio');
 
         function renderSteps() {
             const container = document.getElementById('steps-container');
-            container.innerHTML = stepsData.map((step, index) => `
-                <button onclick="changeUnit(${index})" 
-                    class="w-full text-right p-5 rounded-2xl transition-all border relative overflow-hidden group 
-                    ${activeStepIndex === index ? 'step-card active bg-white border-[#C5A059] shadow-xl' : 'bg-white/50 border-gray-100 hover:bg-white hover:border-gray-200'}">
-                    ${activeStepIndex === index ? '<div class="absolute top-0 right-0 w-1.5 h-full gold-bg"></div>' : ''}
+            document.getElementById('units-count-label').innerText = `${stepsData.length} وحدات تدريبية`;
+            
+            container.innerHTML = stepsData.map((step, i) => `
+                <button onclick="changeStep(${i})" class="w-full text-right p-5 rounded-2xl border transition-all duration-300 relative overflow-hidden group ${activeIndex === i ? 'step-card active' : 'bg-white border-gray-100 hover:border-gray-200'}">
                     <div class="flex items-center gap-4">
-                        <div class="icon-box w-12 h-12 rounded-xl flex items-center justify-center transition-colors 
-                            ${activeStepIndex === index ? 'dark-bg gold-text' : 'bg-gray-100 text-gray-400 group-hover:bg-gray-200'}">
-                            <i data-lucide="${step.icon}" size="24"></i>
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center transition-all ${activeIndex === i ? 'dark-bg gold-text scale-105' : 'bg-gray-50 text-gray-400 group-hover:bg-gray-100'}">
+                            <i data-lucide="${step.icon}" size="22"></i>
                         </div>
                         <div class="flex-1">
-                            <h3 class="text-sm font-bold ${activeStepIndex === index ? 'text-[#1A1A1A]' : 'text-gray-600'}">${step.title}</h3>
-                            <div class="flex items-center gap-2 mt-1">
-                               <span class="text-[10px] ${activeStepIndex === index ? 'gold-text' : 'text-gray-400'}">${step.subtitle}</span>
-                               <span class="text-[10px] text-gray-300">•</span>
-                               <span class="text-[10px] text-gray-400">${step.time}</span>
+                            <h3 class="text-sm font-black ${activeIndex === i ? 'text-gray-900' : 'text-gray-600'}">${step.title}</h3>
+                            <div class="flex items-center gap-2 mt-0.5">
+                                <span class="text-[10px] ${activeIndex === i ? 'gold-text' : 'text-gray-400'}">${step.subtitle}</span>
                             </div>
                         </div>
-                        <i data-lucide="chevron-left" class="w-4 h-4 transition-transform ${activeStepIndex === index ? 'gold-text -translate-x-1' : 'text-gray-300'}"></i>
+                        <i data-lucide="chevron-left" size="14" class="transition-transform ${activeIndex === i ? 'gold-text' : 'text-gray-200'}"></i>
                     </div>
                 </button>
             `).join('');
@@ -227,84 +206,65 @@
         }
 
         function renderContent() {
-            const step = stepsData[activeStepIndex];
+            const step = stepsData[activeIndex];
+            const videoWrapper = document.getElementById('video-wrapper');
             
-            // تحديث الفيديو
-            const video = document.getElementById('main-video');
-            const videoSource = document.getElementById('video-source');
-            videoSource.src = step.videoUrl;
-            video.load();
+            if (step.videoType === 'youtube') {
+                videoWrapper.innerHTML = `<iframe src="${step.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            } else {
+                videoWrapper.innerHTML = `<video id="active-video" controls class="w-full h-full object-cover"><source src="${step.videoUrl}" type="video/mp4"></video>`;
+            }
 
-            // تحديث المحتوى
-            const contentContainer = document.getElementById('unit-content');
-            let contentHTML = `
-                <div class="absolute top-0 right-0 w-64 h-64 bg-[#C5A059]/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+            let html = `
                 <div class="relative z-10">
-                    <span class="dark-bg gold-text px-4 py-1.5 rounded-full text-[10px] font-black uppercase mb-6 inline-block">
-                        الوحدة التدريبية ${step.id}
-                    </span>
-                    <h2 class="text-3xl md:text-4xl font-black text-[#1A1A1A] mb-6 leading-[1.1]">${step.title}</h2>
-                    <p class="text-gray-500 text-lg leading-relaxed mb-10 max-w-2xl font-medium">${step.description}</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
-                        ${step.details.map(detail => `
+                    <span class="dark-bg gold-text px-3 py-1 rounded-md text-[10px] font-black uppercase mb-6 inline-block tracking-tighter">المسار التدريبي - الجزء ${step.id}</span>
+                    <h2 class="text-3xl font-black text-gray-900 mb-6 leading-tight">${step.title}</h2>
+                    <p class="text-gray-500 text-lg mb-10 font-medium">${step.description}</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                        ${step.details.map(d => `
                             <div class="flex items-start gap-3 p-4 bg-gray-50 rounded-2xl border border-gray-100/50">
-                                <div class="mt-1 w-5 h-5 gold-bg rounded-full flex items-center justify-center text-white flex-shrink-0">
-                                    <i data-lucide="check-circle" size="12"></i>
+                                <div class="w-5 h-5 gold-bg rounded-full flex items-center justify-center text-white mt-0.5 flex-shrink-0">
+                                    <i data-lucide="check" size="12"></i>
                                 </div>
-                                <span class="text-sm font-bold text-gray-700">${detail}</span>
+                                <span class="text-sm font-bold text-gray-700">${d}</span>
                             </div>
                         `).join('')}
                     </div>
             `;
 
-            if (step.copyableHooks) {
-                contentHTML += `
-                    <div class="mb-10 space-y-4">
-                        <h4 class="text-xs font-bold gold-text uppercase tracking-widest flex items-center gap-2">
-                            <i data-lucide="pen-tool" size="14"></i> قوالب التواصل السريع:
-                        </h4>
-                        <div class="grid grid-cols-1 gap-3">
-                            ${step.copyableHooks.map((hook, i) => `
-                                <div class="bg-gray-50 p-4 rounded-2xl border border-dashed border-gray-200 group flex items-center justify-between hover:bg-white hover:border-[#C5A059] transition-all">
-                                    <div class="flex-1">
-                                        <span class="text-[10px] font-bold text-gray-400 block mb-1">${hook.label}</span>
-                                        <p class="text-xs text-gray-700 leading-relaxed italic">"${hook.text}"</p>
-                                    </div>
-                                    <button onclick="copyToClipboard('${hook.text.replace(/'/g, "\\'")}')" class="mr-4 p-3 bg-white text-gray-400 hover:text-[#C5A059] shadow-sm rounded-xl">
-                                        <i data-lucide="copy" size="18"></i>
-                                    </button>
+            if (step.copyable) {
+                html += `
+                    <div class="space-y-3 mb-10">
+                        <h4 class="text-xs font-black gold-text uppercase mb-4">القوالب الذكية:</h4>
+                        ${step.copyable.map(c => `
+                            <div class="bg-gray-50 p-4 rounded-2xl border border-dashed border-gray-200 flex items-center justify-between group hover:border-[#C5A059] transition-all">
+                                <div class="flex-1">
+                                    <span class="text-[9px] font-bold text-gray-400 block mb-1 uppercase">${c.label}</span>
+                                    <p class="text-xs text-gray-600 italic">"${c.text}"</p>
                                 </div>
-                            `).join('')}
-                        </div>
+                                <button onclick="copyText('${c.text.replace(/'/g, "\\'")}')" class="p-3 bg-white text-gray-400 hover:text-[#C5A059] rounded-xl shadow-sm mr-4 transition-all">
+                                    <i data-lucide="copy" size="18"></i>
+                                </button>
+                            </div>
+                        `).join('')}
                     </div>
                 `;
             }
 
-            if (step.showAudio) {
-                audioPlayer.src = step.audioSrc;
-                contentHTML += `
-                    <div class="dark-bg rounded-[2rem] p-8 border border-gray-800 shadow-2xl mt-8">
-                        <div class="flex flex-col md:flex-row items-center gap-8">
-                            <button onclick="toggleAudio()" class="w-20 h-20 gold-bg rounded-full flex items-center justify-center text-[#1A1A1A] shadow-xl hover:scale-105 active:scale-95 transition-all">
+            if (step.hasAudio) {
+                audio.src = step.audioSrc;
+                html += `
+                    <div class="dark-bg rounded-[2.5rem] p-8 border border-gray-800 mt-6 shadow-2xl relative overflow-hidden">
+                        <div class="flex flex-col md:flex-row items-center gap-8 relative z-10">
+                            <button onclick="toggleAudio()" id="audio-btn" class="w-20 h-20 gold-bg rounded-full flex items-center justify-center text-[#1A1A1A] hover:scale-105 active:scale-95 transition-all shadow-xl">
                                 <i id="audio-icon" data-lucide="play" size="32" fill="currentColor"></i>
                             </button>
-                            <div class="flex-1 w-full space-y-4">
-                                <div class="flex justify-between items-end">
-                                    <div>
-                                        <p class="gold-text text-[10px] font-bold uppercase tracking-widest mb-1">ملف صوتي حصري</p>
-                                        <h4 class="text-white font-bold text-lg">استمع إلى فلسفة النظام</h4>
-                                    </div>
-                                    <span class="text-xs font-mono text-gray-500">HQ Audio</span>
-                                </div>
+                            <div class="flex-1 w-full">
+                                <p class="gold-text text-[9px] font-black uppercase tracking-[0.2em] mb-1">تسجيل صوتي حصري</p>
+                                <h4 class="text-white font-bold text-xl mb-4">فلسفة النظام السيادي</h4>
                                 <div class="relative h-2 bg-gray-800 rounded-full overflow-hidden">
-                                    <div id="audio-progress-bar" class="absolute top-0 right-0 h-full bg-gradient-to-l from-[#C5A059] to-[#E5C07B]" style="width: 0%"></div>
-                                </div>
-                                <div class="flex justify-between items-center text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-                                    <div class="flex items-center gap-1">
-                                        <i data-lucide="volume-2" size="12" class="gold-text"></i>
-                                        <span>نظام صوتي محيطي</span>
-                                    </div>
-                                    <span>2026 Edition</span>
+                                    <div id="audio-progress-bar" class="absolute top-0 right-0 h-full gold-bg" style="width: 0%"></div>
                                 </div>
                             </div>
                         </div>
@@ -312,58 +272,49 @@
                 `;
             }
 
-            contentHTML += `</div>`;
-            contentContainer.innerHTML = contentHTML;
+            html += `</div>`;
+            document.getElementById('unit-content').innerHTML = html;
             lucide.createIcons();
         }
 
-        function changeUnit(index) {
-            activeStepIndex = index;
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0;
+        function changeStep(index) {
+            activeIndex = index;
+            audio.pause();
+            audio.currentTime = 0;
             renderSteps();
             renderContent();
         }
 
         function toggleAudio() {
             const icon = document.getElementById('audio-icon');
-            if (audioPlayer.paused) {
-                audioPlayer.play();
+            if (audio.paused) {
+                audio.play();
                 icon.setAttribute('data-lucide', 'pause');
             } else {
-                audioPlayer.pause();
+                audio.pause();
                 icon.setAttribute('data-lucide', 'play');
             }
             lucide.createIcons();
         }
 
-        audioPlayer.ontimeupdate = () => {
-            const progressBar = document.getElementById('audio-progress-bar');
-            if (progressBar) {
-                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-                progressBar.style.width = progress + '%';
-            }
+        audio.ontimeupdate = () => {
+            const bar = document.getElementById('audio-progress-bar');
+            if (bar) bar.style.width = (audio.currentTime / audio.duration) * 100 + '%';
         };
 
-        audioPlayer.onended = () => {
-            document.getElementById('audio-icon').setAttribute('data-lucide', 'play');
-            lucide.createIcons();
-        };
-
-        function copyToClipboard(text) {
+        function copyText(text) {
             const el = document.createElement('textarea');
             el.value = text;
             document.body.appendChild(el);
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-
+            
             const toast = document.getElementById('toast');
-            toast.style.opacity = '1';
-            setTimeout(() => toast.style.opacity = '0', 2000);
+            toast.classList.add('toast-active');
+            setTimeout(() => toast.classList.remove('toast-active'), 2500);
         }
 
-        // بدء التشغيل
         window.onload = () => {
             renderSteps();
             renderContent();
@@ -371,5 +322,3 @@
     </script>
 </body>
 </html>
-
-
